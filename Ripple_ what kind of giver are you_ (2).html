@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ripple: what kind of giver are you?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F2FF;--card:#FFFFFF;--ink:#16132B;--mute:#625C7E;--line:#DAD4F2;--bd:#16132B;--sh:#16132B;--brand:#5B3DF5;--brand-ink:#FFFFFF;--pop:#FFD84D;--pop-ink:#16132B;--soft:#ECE8FF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14111F;--card:#201B35;--ink:#F3F0FF;--mute:#B0AACC;--line:#383256;--bd:#6A61A0;--sh:#07050E;--brand:#9A8CFF;--brand-ink:#14111F;--soft:#2B2548}}
+:root[data-theme="dark"]{--bg:#14111F;--card:#201B35;--ink:#F3F0FF;--mute:#B0AACC;--line:#383256;--bd:#6A61A0;--sh:#07050E;--brand:#9A8CFF;--brand-ink:#14111F;--soft:#2B2548}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;padding-bottom:100px;background-color:var(--bg);background-image:radial-gradient(var(--line) 1.3px,transparent 1.3px);background-size:22px 22px;color:var(--ink);font:400 16px/1.55 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main,header{max-width:720px;margin:0 auto;padding:0 18px}
+header{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:8px;font-size:1.8rem;font-weight:800;letter-spacing:-.04em}
+.logo{width:40px;height:40px}
+.rg{transform-origin:20px 20px;animation:rip 2.6s ease-out infinite}.r2{animation-delay:1.3s}
+@keyframes rip{0%{opacity:.9;transform:scale(.55)}100%{opacity:0;transform:scale(1.2)}}
+.lvl{font:inherit;font-weight:800;font-size:.85rem;background:var(--pop);color:var(--pop-ink);border:2px solid var(--bd);border-radius:20px;padding:5px 12px;box-shadow:2px 2px 0 var(--sh);cursor:pointer}
+h2{font-size:1.45rem;line-height:1.15;margin:0 0 8px;font-weight:800;letter-spacing:-.02em}
+h3{font-size:1.05rem;margin:0;font-weight:800}
+p{margin:0 0 12px}
+.mute{color:var(--mute)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;gap:6px;padding:8px max(10px,calc(50% - 340px)) calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:2px solid var(--bd)}
+nav button{flex:1;border:2px solid transparent;background:transparent;color:var(--mute);font:inherit;font-weight:700;font-size:.78rem;padding:6px 2px;border-radius:14px;cursor:pointer;line-height:1.2}
+nav i{display:block;font-style:normal;font-size:1.3rem}
+nav button[aria-selected="true"]{background:var(--pop);color:var(--pop-ink);border-color:var(--bd)}
+.card,.post,.stat{background:var(--card);border:2px solid var(--bd);border-radius:18px;box-shadow:4px 4px 0 var(--sh)}
+.card{padding:20px;margin-bottom:18px}
+.hero{background:var(--pc,var(--brand));color:#16132B;border:2px solid var(--bd);border-radius:22px;box-shadow:6px 6px 0 var(--sh);padding:24px 22px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero h2{font-size:clamp(2.4rem,10vw,3.8rem);line-height:1;letter-spacing:-.04em;margin:8px 0 10px}
+.hero p{margin:0 0 8px;max-width:44ch}
+.hero .big{position:absolute;right:14px;top:4px;font-size:5rem;line-height:1}
+.hero .btn{background:#16132B;color:#FFFFFF}
+.hero .btn.alt{background:#FFFFFF;color:#16132B}
+.hero .pill{background:#FFFFFF;color:#16132B}
+.btn{font:inherit;font-weight:700;border:2px solid var(--bd);border-radius:12px;padding:11px 18px;cursor:pointer;background:var(--brand);color:var(--brand-ink);box-shadow:3px 3px 0 var(--sh);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.btn.alt{background:var(--card);color:var(--ink)}
+.btn.on{background:var(--pop);color:var(--pop-ink)}
+.btn.sm{padding:7px 12px;font-size:.9rem;box-shadow:2px 2px 0 var(--sh)}
+.btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.prog,.fit{height:12px;border-radius:12px;background:var(--soft);border:2px solid var(--bd);overflow:hidden}
+.prog{margin:8px 0 18px}
+.fit{margin:6px 0 14px}
+.prog i,.fit i{display:block;height:100%;background:var(--brand);transition:width .3s}
+.lik{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.opts{display:grid;gap:10px;margin:16px 0}
+.opt{text-align:left;font:inherit;font-weight:600;color:var(--ink);background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:13px 14px;cursor:pointer;box-shadow:2px 2px 0 var(--sh);transition:transform .08s}
+.opt:hover{transform:translate(-1px,-1px)}
+.opt[aria-pressed="true"]{background:var(--pop);color:var(--pop-ink)}
+.lik .opt{text-align:center;padding:12px 4px}
+.em{display:block;font-size:1.8rem;line-height:1.2}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;background:var(--soft);color:var(--ink);font-weight:700;font-size:.78rem;padding:2px 10px;border-radius:20px;margin:0 6px 4px 0;border:1.5px solid var(--bd)}
+.pill.pop{background:var(--pop);color:var(--pop-ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.chips .opt{padding:7px 14px;border-radius:20px}
+.post{padding:16px;margin-bottom:18px;border-left-width:8px}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ph>div{flex:1;min-width:0;line-height:1.25}
+.ph small{color:var(--mute)}
+.av{flex:none;width:42px;height:42px;border-radius:50%;border:2px solid var(--bd);display:grid;place-items:center;font-size:1.3rem;color:#16132B}
+.when{font-weight:700;font-size:.8rem;background:var(--soft);border:1.5px solid var(--bd);padding:3px 10px;border-radius:20px;white-space:nowrap}
+.ev{display:flex;gap:12px;align-items:center;background:var(--soft);border:2px dashed var(--bd);border-radius:12px;padding:10px 12px;margin:10px 0 12px}
+.cal{flex:none;width:50px;text-align:center;line-height:1.1;background:var(--card);border:2px solid var(--bd);border-radius:10px;padding:5px 0}
+.cal b{display:block;font-size:1.3rem;font-weight:800}
+.cal span{font-size:.72rem;color:var(--mute);font-weight:700}
+.why{background:var(--pop);color:var(--pop-ink);font-size:.82rem;font-weight:700;display:inline-block;border-radius:8px;padding:3px 10px;margin:0 0 10px;transform:rotate(-1deg)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+a.btn{text-decoration:none;display:inline-block}
+.streak{display:flex;align-items:center;gap:16px}
+.streak b{font-size:3.2rem;line-height:1;font-weight:800;color:var(--brand);white-space:nowrap}
+.strip{display:flex;gap:6px;margin-top:8px}
+.strip span{flex:1;height:34px;border-radius:8px;border:2px solid var(--bd);background:var(--soft)}
+.strip span.on{background:var(--pop)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat{padding:12px;box-shadow:3px 3px 0 var(--sh)}
+.stat b{display:block;font-size:1.6rem;line-height:1.1;font-weight:800}
+.stat span{color:var(--mute);font-size:.85rem}
+.ms{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.ms:first-of-type{border-top:0}
+.dot{flex:none;width:34px;height:34px;border-radius:50%;background:var(--soft);border:2px solid var(--bd);display:grid;place-items:center;font-weight:800;color:var(--mute)}
+.ms.done .dot{background:var(--pop);color:var(--pop-ink)}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:14px}
+.bd{text-align:center;font-size:.8rem;line-height:1.25}
+.bd.lock{opacity:.6}
+.bd.lock .dot{filter:grayscale(1)}
+.bd .dot{margin:0 auto 6px;width:58px;height:58px;font-size:1.7rem;color:inherit}
+.bd .dot.on{background:var(--pop)}
+label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--bd);border-radius:10px;padding:10px}
+textarea{min-height:80px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.log{border-top:1px solid var(--line);padding:12px 0}
+.log:first-of-type{border-top:0}
+.log small{color:var(--mute)}
+.log q{display:block;margin-top:4px;quotes:none}
+.err{color:#B3261E;font-weight:700;margin:8px 0 0}
+.ok{background:var(--pop);color:var(--pop-ink);border:2px solid var(--bd);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:16px}
+@media (prefers-color-scheme:dark){.err{color:#FF8A80}}
+.foot{color:var(--mute);font-size:.85rem;padding:8px 0 24px}
+#toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translate(-50%,-160%);background:var(--ink);color:var(--bg);font-weight:700;padding:10px 18px;border-radius:30px;z-index:20;transition:transform .3s;max-width:90vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+.cf{position:fixed;top:-14px;width:10px;height:14px;z-index:30;pointer-events:none;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(540deg)}}
+.fade{animation:up .3s ease-out}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+@media (max-width:480px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.lik{grid-template-columns:1fr 1fr}.hero .big{font-size:3.6rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="var(--brand)"/><circle class="rg" cx="20" cy="20" r="11" fill="none" stroke="var(--brand)" stroke-width="2.5"/><circle class="rg r2" cx="20" cy="20" r="17" fill="none" stroke="var(--brand)" stroke-width="2.5"/></svg>Ripple</div>
+  <button class="lvl" id="lvl" data-a="tab" data-v="rewards" aria-label="Open rewards">Lv 1</button>
+</header>
+<main id="app"></main>
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" id="t-quiz" data-a="tab" data-v="quiz"><i>🎭</i>Type</button>
+  <button role="tab" id="t-feed" data-a="tab" data-v="feed"><i>📱</i>Feed</button>
+  <button role="tab" id="t-journey" data-a="tab" data-v="journey"><i>📈</i>Journey</button>
+  <button role="tab" id="t-rewards" data-a="tab" data-v="rewards"><i>🏆</i>Rewards</button>
+</nav>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const C={animals:"Animal welfare",env:"Environment",seniors:"Seniors",edu:"Education and mentoring",mind:"Mental wellbeing",food:"Food and basic needs",incl:"Inclusion and disability",digital:"Digital skills for good"};
+const K=Object.keys(C);
+const PC={animals:"#FF8A4C",env:"#3DD68C",seniors:"#FF7EB6",edu:"#6FA8FF",mind:"#A78BFA",food:"#FFC53D",incl:"#2DD4BF",digital:"#8B9BFF"};
+const EM={animals:"🐾",env:"🌿",seniors:"🧓",edu:"📚",mind:"💬",food:"🍲",incl:"🤝",digital:"💻"};
+const BE={quiz:"🎯",first:"🌱",saver:"🔖",joiner:"🎟️",explorer:"🧭",community:"🤝",reflect:"📝",idea:"💡",ten:"⏱️",streak:"🔥"};
+const P={
+ animals:["The Guardian","Speaks up for those who cannot.","Animal suffering hits you hard, and you turn that feeling into action. You are the friend who stops for a stray."],
+ env:["The Steward","Leaves every place better than they found it.","Waste and damage to nature bother you. You would rather pick it up than just post about it."],
+ seniors:["The Companion","Believes every story deserves a listener.","You notice the people others rush past. Your patience and warmth make lonely days lighter."],
+ edu:["The Mentor","Sees potential before anyone else does.","You care about fair starts. You explain things well and want others to catch up and rise."],
+ mind:["The Listener","Notices what others miss.","You pick up on quiet struggles and make people feel heard without making it a big deal."],
+ food:["The Provider","Believes no one should go without.","You get practical about need. Meals and essentials matter more to you than speeches."],
+ incl:["The Advocate","Makes room for everyone.","You notice who is left out and push to change that, in small daily ways and bigger ones."],
+ digital:["The Builder","Turns skills into solutions.","You want your tech skills to matter beyond grades. Give you a real problem and you start building."]
+};
+const ST={
+ doer:["Hands-on","You give best on the ground. Go for the Act items and show up in person."],
+ maker:["Creator","You give best by making things. Turn any cause here into a poster, video, tool or zine and share it."],
+ connector:["Connector","You give best with people. Bring a friend or your CCA along and keep in touch with who you meet."],
+ organiser:["Organiser","You give best by making things run. Offer to plan, coordinate or track a drive."]
+};
+const LQ=[
+ "Seeing an animal being mistreated stays on my mind for days.",
+ "Litter or waste in nature genuinely bothers me.",
+ "It bothers me when an elderly person is lonely or left behind by technology.",
+ "It frustrates me when a smart kid falls behind just because they lack support.",
+ "I notice when friends are struggling quietly and I want to check in.",
+ "It bothers me that some families here still skip meals or go without basics.",
+ "I feel strongly that people with disabilities should be able to join in everything.",
+ "I like the idea of using my tech skills to fix a real problem for someone."
+];
+const LS=[["😐","Not really"],["🙂","A little"],["😮","Somewhat"],["🔥","Very much"]];
+const SQ=[
+ {q:"Your group is running a charity event. Which job do you grab?",o:[["Setting up and working on the ground","doer:2"],["Making the posters, videos or website","maker:2,digital:1"],["Greeting people and chatting with everyone","connector:2"],["Planning the schedule and logistics","organiser:2"]]},
+ {q:"After a good day of giving, what feels best?",o:[["Seeing the change with my own eyes","doer:2"],["Having made something that lasts","maker:2"],["Meeting someone and hearing their story","connector:2,seniors:1"],["Knowing it all ran smoothly","organiser:2"]]},
+ {q:"You have two free hours. What sounds best?",o:[["Walking shelter dogs or cleaning a beach","doer:1,animals:1,env:1"],["Building or designing something for a good cause","maker:1,digital:1"],["Tutoring or chatting with someone new","connector:1,edu:1,seniors:1"],["Sorting donations and packing supplies","organiser:1,food:1"]]},
+ {q:"How do you like to get started with something new?",o:[["Jump in and learn as I go","doer:2"],["Try a small project of my own","maker:2"],["Go along with a friend","connector:2"],["Find out what is needed first","organiser:2"]]}
+];
+const N=LQ.length+SQ.length;
+const L1="https://www.eventbrite.sg/d/singapore--singapore/volunteer/",L2="https://www.eventbrite.com/b/singapore--singapore/charity-and-causes/",YC="https://discover.nyc.gov.sg/civicaction/Join-Opportunities/";
+// [id,cause,org,title,caption,date,when,venue,url,button,flag]
+const E=[
+ ["sosd","animals","SOSD","Shelter Tour, October 2026","A shelter tour at The Animal Lodge. A good first step if you want to see animal welfare up close.","2026-10-25","Sun, 1:00 PM","The Animal Lodge","https://www.eventbrite.sg/e/sosd-shelter-tour-oct-2026-tickets-1999357221270","Sign up",""],
+ ["invasive","env","Eventbrite listing","Invasive Species Management","Hands-on conservation work at Rifle Range Nature Park. Search the title on the listing page.","2026-10-10","Sat, 9:00 AM","Rifle Range Nature Park",L1,"Find on Eventbrite","Almost full"],
+ ["litter","env","Eventbrite listing","Litter Vanture clean-up","A community clean-up. Find it on the listing page to see the time and sign up.","2026-10-24","Sat","Sheng Siong Supermarket",L1,"Find on Eventbrite",""],
+ ["cloop","env","Tzu Chi HYC x Cloop","Sort with Purpose","A volunteer sorting session at the Tzu Chi Humanistic Youth Centre, with Cloop.","2026-10-18","Sun, 10:00 AM","Tzu Chi Humanistic Youth Centre","https://www.eventbrite.sg/e/sort-with-purpose-volunteer-with-hyc-x-cloop-tickets-1996604417560","Sign up","Almost full"],
+ ["mangrove","env","NParks","Mangrove clean-up","NParks takes volunteers for mangrove clean-ups. Email them to sign up.",null,"Recurring","See NParks page","https://www.nparks.gov.sg/get-involved/volunteer/volunteer-with-us","Learn more",""],
+ ["sound","mind","eLSeWhere","The Sound of Giving","A sound bath in support of HCSA Dayspring, held for eLSeWhere's official opening.","2026-10-10","Sat, 11:30 AM","eLSeWhere","https://www.eventbrite.sg/e/the-sound-of-giving-tickets-2002040007556","Sign up","Almost full"],
+ ["purple","incl","The Purple Parade","The Purple Parade 2026","Singapore's national movement celebrating the abilities of persons with disabilities is back. Venue not confirmed yet.","2026-10-24","Sat","Check CDC page","https://centralsingapore.cdc.gov.sg/happenings/upcoming-events/","Details",""],
+ ["pteunos","incl","Youth Corps Singapore","Purple Together: volunteer befriender (Eunos)","Join as a befriender and march with residents of Thye Hua Kwan Moral Charities at the Purple Parade.",null,"Oct 2026","20 Jalan Eunos",YC+"Individual/2026/10/Purple-Together-YCS-x-THKMC-2026---Eunos","Apply",""],
+ ["ptsemb","incl","Youth Corps Singapore","Purple Together: volunteer befriender (Sembawang)","Same programme at the Sembawang site. Check the page for dates and roles.",null,"Oct 2026","7 Sembawang Walk",YC+"Individual/2026/10/Purple-Together-YCS-x-THKMC-2026---Sembawang","Apply",""],
+ ["bridge","seniors","Youth Corps Singapore","Bridging Generations, Our Tampines Hub","Bite-sized sessions: walk, play games and talk with seniors. Runs most months for ages 17 to 35. This link is an earlier session, so check for the next date.",null,"Recurring","Our Tampines Hub",YC+"Individual/2026/07/Bridging-Generations--Our-Tampines-Hub-11-Aug-2026","Learn more",""],
+ ["dbuddy","digital","Care Corner","Youth Digital Buddies","Teach seniors to use Instagram, TikTok and everyday apps. For ages 15 to 35. This link is the July round, so check for new dates.",null,"Recurring","Several HDB estates",YC+"Landing/Youth-Digital-Buddies---Jul-2026","Learn more",""],
+ ["dfl","digital","Digital for Life","Digital for Life movement","IMDA's national movement for digital inclusion. See its projects and ways to volunteer.",null,"Ongoing","Islandwide","https://www.digitalforlife.gov.sg/about/our-projects","Learn more",""],
+ ["rescue","food","Eventbrite listing","Food Rescue Mission, Jul to Dec 2026","A series running to December. The 5 Oct session was at Lembu Road Open Space. Check the listing for the next date.",null,"Recurring","Lembu Road Open Space",L2,"Find on Eventbrite",""],
+ ["krsna","food","Krsna's Free Meals","Volunteer meal shifts","Breakfast shifts 6:30 to 9am and lunch shifts 9:30am to 2:30pm, including weekends. Details come from a 2026 directory, so confirm with them.",null,"Daily shifts","Singapore","https://honeykidsasia.com/volunteering-for-kids-in-singapore-charities/","See directory",""]
+];
+const MORE="https://www.volunteer.gov.sg/";
+const CM={school:"My school or class",cca:"My CCA or club",hood:"My neighbourhood",hobby:"A hobby or interest group",faith:"A faith or cultural group",family:"My family"};
+const CML={school:"school or class",cca:"CCA or club",hood:"neighbourhood",hobby:"hobby group",faith:"faith or cultural group",family:"family"};
+const CMY={school:"your school or class",cca:"your CCA or club",hood:"your neighbourhood",hobby:"your hobby group",faith:"your faith or cultural group",family:"your family"};
+const EXP=[["first","First timer"],["some","Done a few"],["exp","Experienced"]];
+const LEN=[["s","About 1 to 2 hrs"],["m","Half a day"],["r","Regular commitment"]];
+const LL={s:"About 1 to 2 hrs (est.)",m:"About half a day (est.)",r:"Regular commitment"};
+// id:[communities, length, level] (estimates)
+const TG={sosd:["hobby,hood","s","first"],invasive:["school,cca,hood","m","first"],litter:["school,cca,hood","s","first"],cloop:["faith,school","s","first"],mangrove:["school,cca","m","some"],sound:["hobby","s","first"],purple:["school,cca,hood,family","m","first"],pteunos:["school,cca","m","first"],ptsemb:["school,cca","m","first"],bridge:["hood,family,school","s","first"],dbuddy:["hood,family,hobby","r","some"],dfl:["school,hobby","r","exp"],rescue:["hood,school","m","first"],krsna:["faith,hood","s","first"]};
+const AGE=[["a","15 to 16"],["b","17 to 20"],["c","21 to 30"]];
+const AB={a:[15,16],b:[17,20],c:[21,30]};
+const AL={bridge:[17,35],dbuddy:[15,35]};
+const agok=e=>{const l=AL[e[0]],b=AB[S.pref.age];return !l||!b||(b[1]>=l[0]&&b[0]<=l[1])};
+const NOUN={animals:"a supplies drive for an animal shelter",env:"a mini clean-up",seniors:"a card-writing session for seniors",edu:"a peer tutoring hour",mind:"a wellbeing check-in circle",food:"a food collection drive",incl:"an inclusion awareness day",digital:"a digital safety session for seniors"};
+const KEY="ripple-v2";
+let S={ans:[],res:null,logs:[],saved:[],going:[],comm:[],pref:{},setup:false,lb:{on:false,cls:"",sch:""}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let view="quiz",step=-1,flt="you",msg="",srt="match",lenf="any",ftf=false,lbs="class",seen=null;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>new Date().toLocaleDateString("en-CA");
+const wk=d=>{const x=new Date(d+"T00:00:00");x.setDate(x.getDate()-((x.getDay()+6)%7));return Math.round(x.getTime()/6048e5)};
+
+function score(){
+  const t={};K.concat(Object.keys(ST)).forEach(k=>t[k]=0);
+  LQ.forEach((_,i)=>t[K[i]]+=S.ans[i]);
+  SQ.forEach((q,j)=>q.o[S.ans[LQ.length+j]][1].split(",").forEach(p=>{const[k,v]=p.split(":");t[k]+=+v}));
+  const c=K.map(k=>[k,t[k]]).sort((a,b)=>b[1]-a[1]);
+  const s=Object.keys(ST).sort((a,b)=>t[b]-t[a])[0];
+  return{p:c[0][0],sec:c[1][0],style:s,fits:c.slice(0,3),sty:{doer:t.doer,maker:t.maker,connector:t.connector,organiser:t.organiser}};
+}
+function stats(){
+  const L=S.logs,set=new Set(L.map(l=>wk(l.date)));
+  let c=wk(today());if(!set.has(c))c--;let streak=0;while(set.has(c)){streak++;c--}
+  return{streak,mins:L.reduce((a,l)=>a+l.mins,0),n:L.length,causes:new Set(L.map(l=>l.cause)).size,notes:L.filter(l=>l.note.trim()).length,comms:new Set(L.map(l=>l.comm).filter(Boolean)).size};
+}
+
+function setupCard(){
+  const ch=(items,on,a,k)=>items.map(i=>`<button class="opt" aria-pressed="${on(i[0])}" data-a="${a}" data-k="${k}" data-v="${i[0]}">${esc(i[1])}</button>`).join("");
+  const hd=t=>`<h3 style="margin:16px 0 8px">${t}</h3>`;
+  return `<div class="card"><h2>Make your feed yours</h2><p class="mute" style="margin:0">Optional, but it makes your picks much better.</p>
+  ${hd("Which communities are you part of?")}<div class="chips">${ch(Object.entries(CM),v=>S.comm.includes(v),"comm","")}</div>
+  ${hd("How old are you?")}<div class="chips">${ch(AGE,v=>S.pref.age==v,"pref","age")}</div>
+  ${hd("Have you volunteered before?")}<div class="chips">${ch(EXP,v=>S.pref.exp==v,"pref","exp")}</div>
+  ${hd("How much time do you want to give?")}<div class="chips">${ch(LEN,v=>S.pref.len==v,"pref","len")}</div>
+  <button class="btn" data-a="setupdone">Build my feed</button></div>`;
+}
+function quiz(){
+  const r=S.res;
+  if(r){
+    const p=P[r.p],top=r.fits[0][1]||1,sy=r.sty||{},sm=Math.max(1,...Object.values(sy));
+    return `<div class="hero fade" style="--pc:${PC[r.p]}"><div class="big" aria-hidden="true">${EM[r.p]}</div><span class="pill pop">Your giving type</span><h2>${p[0]}</h2><p><b>${p[1]}</b></p><p>${p[2]}</p><p>Giving style: <b>${ST[r.style][0]}</b>. Also drawn to: <b>${C[r.sec]}</b>.</p>
+      <div class="row" style="margin-top:12px"><button class="btn" data-a="tab" data-v="feed">See my feed</button><button class="btn alt" data-a="copy">Copy my result</button></div></div>
+    ${msg?`<p class="ok" role="status">${esc(msg)}</p>`:""}
+    ${S.setup?"":setupCard()}<div class="card"><h2>What moves you most</h2>${r.fits.map(f=>`<div>${EM[f[0]]} ${esc(C[f[0]])}<div class="fit"><i style="width:${Math.max(8,Math.round(f[1]/top*100))}%;background:${PC[f[0]]}"></i></div></div>`).join("")}
+    ${Object.keys(sy).length?`<h3 style="margin:6px 0 4px">Your giving style mix</h3>${Object.keys(ST).map(k=>`<div>${ST[k][0]}<div class="fit"><i style="width:${Math.max(6,Math.round(sy[k]/sm*100))}%"></i></div></div>`).join("")}`:""}
+    <div class="row"><button class="btn alt sm" data-a="retake">Retake the quiz</button>${S.setup?'<button class="btn alt sm" data-a="editprefs">Edit communities and preferences</button>':""}</div></div>`;
+  }
+  if(step<0)return `<div class="hero fade" style="--pc:var(--pop)"><div class="big" aria-hidden="true">🌊</div><h2>What kind of giver are you?</h2><p>${N} quick questions about what bothers you, what you enjoy and how you like to help. You get a giving type and a feed made for it. No right answers.</p><p style="margin-top:14px"><button class="btn" data-a="start">Start the quiz</button></p></div>`;
+  const lik=step<LQ.length,q=lik?null:SQ[step-LQ.length];
+  return `<div class="card fade"><p class="mute" style="margin:0">Question ${step+1} of ${N}</p><div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${N}" aria-valuenow="${step}"><i style="width:${step/N*100}%"></i></div>
+    <h2>${lik?esc(LQ[step]):esc(q.q)}</h2>${lik?'<p class="mute">How much is this like you?</p>':""}
+    <div class="${lik?"lik":"opts"}">${(lik?LS:q.o).map((o,i)=>`<button class="opt" aria-pressed="${S.ans[step]===i}" data-a="ans" data-i="${i}">${lik?`<span class="em">${o[0]}</span>`+esc(o[1]):esc(o[0])}</button>`).join("")}</div>
+    ${step>0?'<button class="btn alt sm" data-a="back">Back</button>':""}</div>`;
+}
+
+function match(e){
+  const r=S.res,tg=TG[e[0]],pf=S.pref;let sc=0,w=[];
+  if(e[1]==r.p){sc+=3;w.push("Matches your type")}else if(e[1]==r.sec){sc+=2;w.push("Fits your second cause")}
+  const hit=tg[0].split(",").filter(c=>S.comm.includes(c));
+  if(hit.length){sc+=Math.min(hit.length,2)*2;w.push("Helps "+CMY[hit[0]])}
+  if(pf.len&&pf.len==tg[1]){sc++;w.push("Fits your time")}
+  if(pf.exp=="first"&&tg[2]=="first"){sc++;w.push("Good for first timers")}
+  if(pf.exp=="exp"&&tg[2]!="first"){sc++;w.push("Suits your experience")}
+  const sim=S.saved.concat(S.going).filter(i=>(E.find(x=>x[0]==i)||[])[1]==e[1]).length;
+  if(sim){sc+=Math.min(sim,2);w.push("Similar to posts you saved")}
+  return{sc,w};
+}
+function post(e,m){
+  const t=today(),dd=e[5]?Math.round((new Date(e[5]+"T00:00:00")-new Date(t+"T00:00:00"))/864e5):null,tg=TG[e[0]];
+  const h=[...e[2]].reduce((a,c)=>a*31+c.charCodeAt(0),7)%360,ini=e[2].split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+  const when=dd===null?e[6]:dd==0?"Today":dd==1?"Tomorrow":"in "+dd+" days";
+  const sv=S.saved.includes(e[0]),go=S.going.includes(e[0]),dt=e[5]?new Date(e[5]+"T00:00:00"):null;
+  return `<article class="post" style="border-left-color:${PC[e[1]]}"><div class="ph"><span class="av" style="background:${PC[e[1]]}" aria-hidden="true">${EM[e[1]]}</span><div><b>${esc(e[2])}</b><br><small>${esc(C[e[1]])}</small></div><span class="when">${esc(when)}</span></div>
+  <h3>${esc(e[3])}</h3><p class="mute" style="margin:4px 0 0">${esc(e[4])}</p>
+  <div class="ev"><div class="cal">${dt?`<b>${dt.getDate()}</b><span>${dt.toLocaleString("en",{month:"short"})}</span>`:`<b>↻</b><span>Check</span>`}</div><div><b>${esc(e[6])}</b>${e[10]?` <span class="pill pop">${e[10]}</span>`:""}<br><span class="mute">${esc(e[7])}</span><br><span class="pill">${LL[tg[1]]}</span>${tg[2]=="first"?'<span class="pill">First timer friendly</span>':""}${AL[e[0]]?`<span class="pill">Ages ${AL[e[0]][0]} to ${AL[e[0]][1]}</span>`:""}</div></div>
+  ${m.w.length?`<p class="why">Why this: ${esc(m.w.join(", "))}</p>`:""}
+  <div class="acts"><a class="btn sm" href="${esc(e[8])}" target="_blank" rel="noopener noreferrer">${esc(e[9])}</a>
+  <button class="btn sm ${go?"on":"alt"}" data-a="go" data-id="${e[0]}" aria-pressed="${go}">${go?"🙋 I'm going":"🙋 Going?"}</button>
+  <button class="btn sm ${sv?"on":"alt"}" data-a="save" data-id="${e[0]}" aria-pressed="${sv}">${sv?"🔖 Saved":"🔖 Save"}</button>
+  <button class="btn sm alt" data-a="share" data-id="${e[0]}">🔗 Share</button></div></article>`;
+}
+function idea(c,k){
+  const t="Run "+NOUN[k]+" with "+CMY[c],done=S.logs.some(l=>l.what==t);
+  return `<article class="post"><div class="ph"><span class="av" style="background:var(--pop)" aria-hidden="true">✨</span><div><b>Start something</b><br><small>${esc(C[k])}, ${esc(CML[c])}</small></div><span class="when">Idea</span></div>
+  <h3>${esc(t)}</h3><p class="mute" style="margin:4px 0 12px">No sign-up needed. Pick a date, tell your friends and log it here when it is done.</p>
+  <button class="btn sm" data-a="idea" data-k="${k}" data-c="${c}" data-t="${esc(t)}" ${done?"disabled":""}>${done?"Logged":"We did this"}</button></article>`;
+}
+function feed(){
+  const r=S.res;
+  if(!r)return `<div class="card"><h2>Your feed is waiting</h2><p>Take the quiz first so we can fill it with things that fit you.</p><button class="btn" data-a="tab" data-v="quiz">Find my type</button></div>`;
+  const t=today(),d=x=>Math.round((new Date(x+"T00:00:00")-new Date(t+"T00:00:00"))/864e5),dv=x=>x.e[5]?d(x.e[5]):999;
+  let L=E.filter(e=>!e[5]||d(e[5])>=0).map(e=>({e,m:match(e)}));const all=L.length;if(S.pref.age)L=L.filter(x=>agok(x.e));const hid=all-L.length;
+  if(flt=="you")L=L.filter(x=>x.m.sc>=2);
+  if(flt=="saved")L=L.filter(x=>S.saved.includes(x.e[0]));
+  if(lenf!="any")L=L.filter(x=>TG[x.e[0]][1]==lenf);
+  if(ftf)L=L.filter(x=>TG[x.e[0]][2]=="first");
+  L.sort(srt=="soon"?(a,b)=>dv(a)-dv(b):(a,b)=>b.m.sc-a.m.sc||dv(a)-dv(b));
+  const posts=L.map(x=>post(x.e,x.m)),gap=flt=="you"&&!L.some(x=>x.e[1]==r.p);
+  const ideas=flt=="saved"?[]:S.comm.slice(0,3).map((c,i)=>idea(c,i==1?r.sec:r.p));
+  posts.splice(Math.min(2,posts.length),0,...ideas);
+  const chip=(on,a,v,l)=>`<button class="opt" aria-pressed="${on}" data-a="${a}" data-v="${v}">${l}</button>`;
+  return `<div class="card" style="border-left:8px solid ${PC[r.p]}"><h3>${EM[r.p]} ${P[r.p][0]}, ${ST[r.style][0]}</h3><p style="margin:4px 0 10px" class="mute">${S.comm.length?"Picked for your type, your communities and your preferences.":"Add your communities and preferences for better picks."}</p><button class="btn alt sm" data-a="editprefs">Edit communities and preferences</button></div>
+    ${msg?`<p class="ok" role="status">${esc(msg)}</p>`:""}
+    <div class="chips">${[["you","For you"],["all","All causes"],["saved","Saved"]].map(c=>chip(flt==c[0],"flt",c[0],c[1])).join("")}</div>
+    <div class="chips" role="group" aria-label="Sort and filter">${[["match","Best match"],["soon","Soonest"]].map(c=>chip(srt==c[0],"srt",c[0],c[1])).join("")}${[["s","~1 to 2 hrs"],["m","Half day"],["r","Regular"]].map(c=>chip(lenf==c[0],"len",c[0],c[1])).join("")}${chip(ftf,"ftf","","First timer friendly")}</div>
+    ${hid?`<p class="ok">${hid} event${hid>1?"s":""} hidden because of age limits.</p>`:""}${gap?`<div class="card"><p class="mute" style="margin:0">No live events found for ${esc(C[r.p])} right now. Try the ideas below or browse volunteer.gov.sg.</p></div>`:""}
+    ${posts.join("")||`<div class="card"><p class="mute" style="margin:0">${flt=="saved"?"Nothing saved yet. Tap Save on a post.":"Nothing matches. Try loosening a filter or switch to All causes."}</p></div>`}
+    <div class="card"><h3>Want more?</h3><p class="mute">Browse hundreds of volunteer openings across every cause.</p><a class="btn sm" href="${MORE}" target="_blank" rel="noopener noreferrer">Browse volunteer.gov.sg</a></div>
+    <p class="foot">Events checked on 7 Oct 2026. Dates, spots and age limits change, so confirm on the sign-up page. Length and community tags are our estimates.</p>`;
+}
+function byc(){
+  if(!S.logs.length)return "";const b={};S.logs.forEach(l=>b[l.cause]=(b[l.cause]||0)+l.mins);const mx=Math.max(...Object.values(b));
+  return `<div class="card"><h2>Where your time went</h2>${Object.entries(b).sort((x,y)=>y[1]-x[1]).map(([k,m])=>`<div>${esc(C[k])}, ${(m/60).toFixed(1).replace(".0","")} hr<div class="fit"><i style="width:${Math.max(6,Math.round(m/mx*100))}%"></i></div></div>`).join("")}</div>`;
+}
+
+const BG=[
+ ["quiz","Giver unlocked","Take the personality quiz",s=>[S.res?1:0,1],"Q"],
+ ["first","First step","Log your first activity",s=>[s.n,1],"1"],
+ ["saver","Curator","Save 3 posts",s=>[S.saved.length,3],"★"],
+ ["joiner","Joiner","Join 1 real event",s=>[S.logs.filter(l=>E.some(e=>e[3]==l.what)).length,1],"Go"],
+ ["explorer","Explorer","Try 3 causes",s=>[s.causes,3],"3"],
+ ["community","Community builder","Help 2 communities",s=>[s.comms,2],"2"],
+ ["reflect","Reflective","Write 5 reflections",s=>[s.notes,5],"5"],
+ ["idea","Idea starter","Run a Start something idea",s=>[S.logs.filter(l=>l.what.startsWith("Run ")).length,1],"!"],
+ ["ten","Ten hours","Give 10 hours",s=>[Math.round(s.mins/6)/10,10],"10h"],
+ ["streak","Showing up","Keep a 3 week streak",s=>[s.streak,3],"3w"]
+];
+const LV=[["Newcomer",0],["Regular",60],["Changemaker",160],["Champion",320],["Legend",600]];
+const DC=[["Demo Class Alpha",31.5],["Demo Class Beta",24],["Demo Class Gamma",18.5],["Demo Class Delta",9]];
+const DS=[["Demo School North",420],["Demo School East",365],["Demo School West",298]];
+function strip(){const w=wk(today()),set=new Set(S.logs.map(l=>wk(l.date)));return `<div class="strip">${[7,6,5,4,3,2,1,0].map(i=>`<span class="${set.has(w-i)?"on":""}" title="${i?i+" weeks ago":"This week"}"></span>`).join("")}</div>`}
+function toast(t){const e=document.getElementById("toast");if(!e)return;e.textContent=t;e.className="show";clearTimeout(toast.t);toast.t=setTimeout(()=>{e.className=""},3200)}
+function confetti(){
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const cols=["#FFD84D","#5B3DF5","#FF7EB6","#3DD68C","#6FA8FF"];
+  for(let i=0;i<30;i++){const d=document.createElement("i");d.className="cf";d.style.cssText="left:"+Math.random()*100+"vw;background:"+cols[i%5]+";animation-delay:"+Math.random()*.4+"s;--dx:"+Math.round((Math.random()*2-1)*80)+"px";document.body.appendChild(d);setTimeout(()=>d.remove(),2400)}
+}
+function prog(){
+  const s=stats(),bd=BG.filter(b=>{const[v,t]=b[3](s);return v>=t}).length;
+  const xp=s.n*20+Math.round(s.mins/6)+s.notes*5+bd*30;let i=0;LV.forEach((l,j)=>{if(xp>=l[1])i=j});
+  return{s,xp,i,bd,next:LV[i+1]};
+}
+function chal(){
+  const w=wk(today()),cur=S.logs.filter(l=>wk(l.date)==w),prev=new Set(S.logs.filter(l=>wk(l.date)<w).map(l=>l.cause));
+  return [["Log an activity",cur.length>=1],["Write a reflection",cur.some(l=>l.note.trim())],["Try a new cause",cur.some(l=>!prev.has(l.cause))],["Help a community",cur.some(l=>l.comm)]];
+}
+function lb(){
+  const h=stats().mins/60,L=S.lb,chip=(on,v,l)=>`<button class="opt" aria-pressed="${on}" data-a="lbs" data-v="${v}">${l}</button>`;
+  if(!L.on)return `<div class="card"><h2>Class leaderboard</h2><p class="mute">Compete as a class or school. Your hours count toward the total. Only totals are shown, never names, and you can leave anytime.</p>
+    <label for="l-cls">Your class</label><input id="l-cls" maxlength="30" placeholder="e.g. Class 1A">
+    <label for="l-sch">Your school (optional)</label><input id="l-sch" maxlength="30" placeholder="e.g. My school"><p></p><button class="btn" data-a="lbjoin">Join the leaderboard</button></div>`;
+  const cls=lbs=="class",me=(cls?L.cls:L.sch)||"Your school",rows=(cls?DC:DS).map(r=>({n:r[0],h:r[1]})).concat([{n:me,h,you:1}]).sort((x,y)=>y.h-x.h),mx=Math.max(...rows.map(r=>r.h),1);
+  return `<div class="card"><h2>Leaderboard</h2><div class="chips">${chip(cls,"class","Class")}${chip(!cls,"school","School")}</div>
+    ${rows.map((r,i)=>`<div style="margin:10px 0"><b>${["🥇","🥈","🥉"][i]||(i+1)+"."}</b> ${esc(r.n)}${r.you?" (you)":""}, ${r.h.toFixed(1).replace(".0","")} hrs<div class="fit"><i style="width:${Math.max(3,Math.round(r.h/mx*100))}%;${r.you?"background:var(--pop)":""}"></i></div></div>`).join("")}
+    <p class="mute" style="font-size:.85rem">Demo teams are sample data. A real rollout would add up everyone in your class or school who opts in.</p>
+    <button class="btn alt sm" data-a="lbleave">Leave the leaderboard</button></div>`;
+}
+function rewards(){
+  const p=prog(),s=p.s,pct=p.next?Math.round((p.xp-LV[p.i][1])/(p.next[1]-LV[p.i][1])*100):100,ch=chal();
+  return `${msg?`<p class="ok" role="status">${esc(msg)}</p>`:""}
+  <div class="card"><span class="pill pop">Level ${p.i+1}</span><h2 style="margin-top:6px">${LV[p.i][0]}</h2><p class="mute" style="margin:0">${p.xp} XP${p.next?", "+(p.next[1]-p.xp)+" to "+p.next[0]:", top level reached"}</p><div class="fit"><i style="width:${Math.max(3,pct)}%"></i></div>
+  <p class="mute" style="margin:0;font-size:.85rem">Earn XP from activities, hours, reflections and badges.</p></div>
+  ${S.res?`<div class="card"><h2>Share your progress</h2><canvas id="share" width="1080" height="1350" style="width:100%;max-width:340px;height:auto;border-radius:16px;display:block;margin:0 auto 14px" role="img" aria-label="Your Ripple progress card"></canvas><div class="row"><button class="btn" data-a="savecard">Save image</button><button class="btn alt" data-a="copystats">Copy text</button></div></div>`:`<div class="card"><h2>Share your progress</h2><p class="mute">Take the quiz to unlock your shareable card.</p><button class="btn" data-a="tab" data-v="quiz">Find my type</button></div>`}
+  <div class="card"><h2>This week</h2>${ch.map(c=>`<div class="ms ${c[1]?"done":""}"><span class="dot" aria-hidden="true">${c[1]?"✓":""}</span><div><h3>${c[0]}</h3></div></div>`).join("")}<p class="mute" style="margin:8px 0 0;font-size:.85rem">${ch.filter(c=>c[1]).length} of ${ch.length} done. Any activity this week keeps your streak alive.</p></div>
+  <div class="card"><h2>Badges, ${p.bd} of ${BG.length}</h2><div class="badges">${BG.map(b=>{const[v,t]=b[3](s),d=v>=t;return `<div class="bd ${d?"":"lock"}"><div class="dot ${d?"on":""}" aria-hidden="true">${BE[b[0]]}</div><b>${b[1]}</b><br><span class="mute">${d?"Unlocked":b[2]+" ("+v+" of "+t+")"}</span></div>`}).join("")}</div></div>
+  ${lb()}`;
+}
+function drawCard(){
+  const c=document.getElementById("share");if(!c||!c.getContext||!S.res)return;
+  const x=c.getContext("2d"),p=prog(),s=p.s,r=S.res,I="#16132B",M="#3B345C",F='"Bricolage Grotesque",system-ui,sans-serif';
+  const t=(str,px,py,sz,w,col,al)=>{x.font=w+" "+sz+"px "+F;x.fillStyle=col;x.textAlign=al||"left";x.fillText(str,px,py)};
+  const bx=(px,py,w,h)=>{x.fillStyle=I;x.fillRect(px+10,py+10,w,h);x.fillStyle="#FFFFFF";x.fillRect(px,py,w,h);x.strokeStyle=I;x.lineWidth=5;x.strokeRect(px,py,w,h)};
+  x.fillStyle=PC[r.p];x.fillRect(0,0,1080,1350);
+  x.fillStyle="rgba(255,255,255,.3)";[420,300,180].forEach(k=>{x.beginPath();x.arc(900,250,k,0,7);x.fill()});
+  t("Ripple",80,130,60,800,I);t(EM[r.p],900,320,190,400,I,"center");
+  t("My giving type",80,360,36,600,I);t(P[r.p][0],80,490,128,800,I);t(P[r.p][1],80,555,36,400,I);t("Giving style: "+ST[r.style][0],80,620,40,800,I);
+  const h=(s.mins/60).toFixed(1).replace(".0","");
+  [[h,"hours given"],[s.n,"activities"],[s.causes,"causes tried"],[s.streak,"week streak"]].forEach((v,i)=>{const px=80+(i%2)*470,py=690+Math.floor(i/2)*190;bx(px,py,420,160);t(String(v[0]),px+30,py+95,84,800,I);t(v[1],px+30,py+138,30,400,M)});
+  BG.filter(b=>{const[v,tt]=b[3](s);return v>=tt}).slice(0,6).forEach((b,i)=>{const cx=130+i*150;x.fillStyle="#FFFFFF";x.beginPath();x.arc(cx,1135,50,0,7);x.fill();x.lineWidth=5;x.strokeStyle=I;x.stroke();t(BE[b[0]],cx,1152,46,400,I,"center")});
+  t("Level "+(p.i+1)+", "+LV[p.i][0]+", "+p.xp+" XP",80,1262,38,800,I);t("What is your giving type? Try Ripple",80,1314,30,400,M);
+}
+async function saveCard(){
+  const c=document.getElementById("share");
+  try{
+    const dl=window.claude?await window.claude.use("downloads"):null;
+    if(!dl){msg="Saving is not available here. Take a screenshot of the card instead."}
+    else{const b=await new Promise(r=>c.toBlob(r,"image/png"));await dl.save({filename:"ripple-card.png",data:b});msg="Saved."}
+  }catch(e){msg=e&&e.code=="declined"?"":"Could not save. Take a screenshot of the card instead."}
+  render();
+}
+function journey(){
+  const s=stats(),h=(s.mins/60).toFixed(1).replace(".0","");
+  const opts=K.map(k=>`<option value="${k}" ${S.res&&S.res.p==k?"selected":""}>${esc(C[k])}</option>`).join("");
+  const mo=[15,30,60,90,120,180].map(m=>`<option value="${m}" ${m==60?"selected":""}>${m>=60?(m/60)+" hr":m+" min"}</option>`).join("");
+  return `<div class="card streak"><b>${s.streak?"🔥":"❄️"}${s.streak}</b><div><h2>${s.streak==1?"week":"weeks"} in a row</h2><p style="margin:0" class="mute">${s.streak?"Log something this week to keep it going.":"Log an activity to start your streak."}</p></div></div>
+  <div class="card"><h3>Last 8 weeks</h3>${strip()}</div>
+  <div class="grid"><div class="stat"><b>${h}</b><span>hours given</span></div><div class="stat"><b>${s.n}</b><span>activities</span></div><div class="stat"><b>${s.causes}</b><span>causes tried</span></div><div class="stat"><b>${s.comms}</b><span>communities helped</span></div></div>
+  ${byc()}${S.going.length?`<div class="card"><h2>Coming up</h2>${E.filter(e=>S.going.includes(e[0])).map(e=>`<div class="log"><h3>${esc(e[3])}</h3><small>${esc(e[6])}${e[5]?", "+esc(e[5]):""}</small><p style="margin:8px 0 0"><button class="btn sm" data-a="did" data-id="${e[0]}">I went, log it</button></p></div>`).join("")}</div>`:""}
+  <div class="card"><h2>Log an activity</h2>
+    <label for="f-cause">Cause</label><select id="f-cause">${opts}</select>
+    <label for="f-what">What did you do?</label><input id="f-what" maxlength="90" placeholder="e.g. Helped at a community garden">
+    <div class="two"><div><label for="f-mins">Time</label><select id="f-mins">${mo}</select></div><div><label for="f-date">Date</label><input id="f-date" type="date" value="${today()}" max="${today()}"></div></div>
+    <label for="f-comm">Community it helped (optional)</label><select id="f-comm"><option value="">None</option>${Object.entries(CM).map(c=>`<option value="${c[0]}">${esc(c[1])}</option>`).join("")}</select>
+    <label for="f-note">What did you notice or learn?</label><textarea id="f-note" placeholder="A sentence is enough."></textarea>
+    ${msg?`<p class="err" role="alert">${esc(msg)}</p>`:""}<p></p><button class="btn" data-a="log">Save activity</button></div>
+  <div class="card"><h2>Your journey</h2>${S.logs.length?[...S.logs].sort((a,b)=>b.date.localeCompare(a.date)).map(l=>`<div class="log"><h3>${esc(l.what)}</h3><small>${esc(C[l.cause])}, ${l.mins} min, ${esc(l.date)}${l.comm?", "+esc(CML[l.comm]):""}</small>${l.note?`<q>${esc(l.note)}</q>`:""}</div>`).join(""):"<p>Nothing logged yet. Tap I did this on a feed card, or log something you already did.</p>"}</div>
+  <div class="row foot"><button class="btn alt sm" data-a="sample">Load sample data</button><button class="btn alt sm" data-a="reset">Clear everything</button></div>`;
+}
+
+function render(){
+  ["quiz","feed","journey","rewards"].forEach(v=>document.getElementById("t-"+v).setAttribute("aria-selected",view==v));
+  document.getElementById("app").innerHTML={quiz,feed,journey,rewards}[view]();
+  if(view=="rewards"){drawCard();if(document.fonts)document.fonts.ready.then(drawCard)}
+  const p=prog(),u=BG.filter(b=>{const[v,t]=b[3](p.s);return v>=t}).map(b=>b[1]),lv=document.getElementById("lvl");
+  if(lv)lv.textContent="Lv "+(p.i+1)+" · "+p.xp+" XP";
+  if(seen){const nb=u.filter(x=>!seen.b.includes(x));if(nb.length){toast("Badge unlocked: "+nb.join(", "));confetti()}else if(p.i>seen.l){toast("Level up: "+LV[p.i][0]);confetti()}}
+  seen={b:u,l:p.i};
+}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a]");if(!b)return;
+  const a=b.dataset.a,d=b.dataset;
+  if(a=="tab"){view=d.v;msg="";window.scrollTo(0,0)}
+  else if(a=="start"){step=0}
+  else if(a=="ans"){S.ans[step]=+d.i;if(step==N-1){S.res=score();save();msg=""}else step++}
+  else if(a=="back"){step--}
+  else if(a=="retake"){S.res=null;S.ans=[];step=0;msg="";save()}
+  else if(a=="flt"){flt=d.v;msg=""}
+  else if(a=="srt"){srt=d.v}
+  else if(a=="lbs"){lbs=d.v}
+  else if(a=="lbjoin"){const c=document.getElementById("l-cls").value.trim();if(!c){msg="Enter your class name to join.";render();return}S.lb={on:true,cls:c,sch:document.getElementById("l-sch").value.trim()};msg="";save()}
+  else if(a=="lbleave"){S.lb={on:false,cls:"",sch:""};save()}
+  else if(a=="savecard"){saveCard()}
+  else if(a=="copystats"){const p=prog(),r=S.res,h=(p.s.mins/60).toFixed(1).replace(".0",""),t=(r?"I'm "+P[r.p][0]+" on Ripple. ":"On Ripple: ")+h+" hrs given, "+p.s.causes+" causes, level "+(p.i+1)+", "+p.bd+" badges. What's your giving type?";msg="Copied to your clipboard.";try{navigator.clipboard.writeText(t).catch(()=>{msg=t;render()})}catch(x){msg=t}}
+  else if(a=="len"){lenf=lenf==d.v?"any":d.v}
+  else if(a=="ftf"){ftf=!ftf}
+  else if(a=="comm"){const i=S.comm.indexOf(d.v);i<0?S.comm.push(d.v):S.comm.splice(i,1);save()}
+  else if(a=="pref"){S.pref[d.k]=S.pref[d.k]==d.v?null:d.v;save()}
+  else if(a=="setupdone"){S.setup=true;view="feed";save();window.scrollTo(0,0)}
+  else if(a=="editprefs"){S.setup=false;view="quiz";save();window.scrollTo(0,0)}
+  else if(a=="idea"){S.logs.push({cause:d.k,what:d.t,mins:60,date:today(),note:"",comm:d.c});msg="Added to your journey.";save()}
+  else if(a=="save"||a=="go"){const k=a=="save"?"saved":"going",i=S[k].indexOf(d.id);i<0?S[k].push(d.id):S[k].splice(i,1);msg=a=="go"&&i<0?"Added to Coming up in your journey.":"";save()}
+  else if(a=="share"){const e=E.find(x=>x[0]==d.id),t=e[3]+" "+e[8];msg="Link copied.";try{navigator.clipboard.writeText(t).catch(()=>{})}catch(x){msg=t}}
+  else if(a=="did"){const e=E.find(x=>x[0]==d.id);S.logs.push({cause:e[1],what:e[3],mins:120,date:today(),note:"",comm:TG[e[0]][0].split(",").find(c=>S.comm.includes(c))||""});S.going=S.going.filter(i=>i!=d.id);msg="";save()}
+  else if(a=="copy"){const r=S.res,t="I'm "+P[r.p][0]+" ("+ST[r.style][0]+") on Ripple. "+P[r.p][1];msg="Copied to your clipboard.";try{navigator.clipboard.writeText(t).catch(()=>{})}catch(x){msg=t}}
+  else if(a=="log"){
+    const what=document.getElementById("f-what").value.trim();
+    if(!what){msg="Add a short description of what you did.";render();return}
+    S.logs.push({cause:document.getElementById("f-cause").value,what,comm:document.getElementById("f-comm").value,mins:+document.getElementById("f-mins").value,date:document.getElementById("f-date").value||today(),note:document.getElementById("f-note").value});
+    msg="";save();
+  }
+  else if(a=="sample"){
+    const x=n=>{const t=new Date();t.setDate(t.getDate()-n);return t.toLocaleDateString("en-CA")};
+    S.logs=[{cause:"seniors",what:"Phone skills session at a community club",mins:90,date:x(0),comm:"hood",note:"Mdm Tan learned to video call her grandson. Patience matters more than speed."},{cause:"env",what:"East Coast Park clean-up",mins:120,date:x(8),comm:"cca",note:"Surprised by how much plastic was just under the sand."},{cause:"digital",what:"Fixed a small charity's booking page",mins:180,date:x(15),comm:"school",note:"Used what we learnt in class for something real."},{cause:"seniors",what:"Weekly befriending call",mins:30,date:x(22),note:""}];
+    save();
+  }
+  else if(a=="reset"){if(confirm("Clear your quiz result and journey?")){S={ans:[],res:null,logs:[],saved:[],going:[],comm:[],pref:{},setup:false,lb:{on:false,cls:"",sch:""}};step=-1;msg="";save()}}
+  render();
+});
+if(S.res)step=N;
+render();
+</script>
+</body>
+</html>
